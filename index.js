@@ -13,7 +13,13 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 //Connect to the myFlixDB database
-mongoose.connect('mongodb://127.0.0.1:27017/myFlixDB');
+// mongoose.connect('mongodb://127.0.0.1:27017/myFlixDB');
+mongoose.connect(
+   'process.env.CONNECTION_URI',{
+      useNewUrlParser: true, 
+      useUnifiedTopology: true
+   }
+);
 
 //Dependencies
 app.use(bodyParser.json() );
