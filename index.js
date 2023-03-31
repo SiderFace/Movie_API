@@ -14,7 +14,10 @@ const Users = Models.User;
 
 // mongoose.connect('mongodb://localhost:27017/dbname', { useNewUrlParser: true, useUnifiedTopology: true });
 
-mongoose.connect('mongodb+srv://siderface@outlook.com:Mahavishnu2017!@siders.67ndzdt.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI, {
+   useNewUrlParser: true,
+   useUnifiedTopology: true
+});
 
 //Connect to the myFlixDB database
 // mongoose.connect('mongodb://127.0.0.1:27017/myFlixDB');
