@@ -205,15 +205,14 @@ async (req, res) => {
       Email: req.body.Email,
       Birthday: req.body.Birthday
       },
-      { new: true },
+      {new: true},
    );
    return res.json(update);
 });
 
 //CREATE - Allow users to add a movie to their list of favorites
 app.post('/users/:Username/movies/:MovieID', 
-passport.authenticate('jwt', 
-{ session: false }), 
+passport.authenticate('jwt', {session: false}), 
 async (req, res) => {
    try {
       const updatedUser = await Users.findOneAndUpdate(
@@ -231,8 +230,7 @@ async (req, res) => {
 
 //DELETE - Allow users to remove a movie from their list of favorites
 app.delete('/users/:Username/movies/:MovieID', 
-passport.authenticate('jwt', 
-{ session: false }), 
+passport.authenticate('jwt', { session: false }), 
 async (req, res) => {
    try {
       const updatedUser = await Users.findOneAndUpdate(
