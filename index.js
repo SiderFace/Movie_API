@@ -211,22 +211,43 @@ async (req, res) => {
 });
 
 //CREATE - Allow users to add a movie to their list of favorites
-app.post('/users/:Username/movies/:Title', 
-passport.authenticate('jwt', {session: false}), 
-async (req, res) => {
-   try {
-      const updatedUser = await Users.findOneAndUpdate(
-         {Username: req.params.Username},
-         {$push: { FavoriteMovies: req.params.Title }},
-         {new: true},
-      );
-      res.json(updatedUser);
-   } catch (err) {
-      console.error(err);
-      res.status(500).send("Error: " + err);
+// app.post('/users/:Username/movies/:Title', 
+// passport.authenticate('jwt', {session: false}), 
+// async (req, res) => {
+//    try {
+//       const updatedUser = await Users.findOneAndUpdate(
+//          {Username: req.params.Username},
+//          {$push: { FavoriteMovies: req.params.Title }},
+//          {new: true},
+//       );
+//       res.json(updatedUser);
+//    } catch (err) {
+//       console.error(err);
+//       res.status(500).send("Error: " + err);
+//    }
+//       }
+//    );
+
+app.post(
+   "/users/:Username/movies/:MovieID",
+   passport.authenticate("jwt", { session: false }),
+   (req, res) => {
+     const promise = Users.findOneAndUpdate(
+       { Username: req.params.Username },
+       {
+         $push: {
+           FavoriteMovies: req.params.MovieID,
+         },
+       },
+       { new: true }
+     ) 
+       .exec();
+ 
+     promise.then((updatedUser) => {
+       res.json(updatedUser);
+     });
    }
-      }
-   );
+ );
 
 //DELETE - Allow users to remove a movie from their list of favorites
 app.delete('/users/:Username/movies/:Title', 
