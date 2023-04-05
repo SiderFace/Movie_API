@@ -211,13 +211,13 @@ async (req, res) => {
 });
 
 //CREATE - Allow users to add a movie to their list of favorites
-app.post('/users/:Username/movies/:MovieID', 
+app.post('/users/:Username/movies/:Title', 
 passport.authenticate('jwt', {session: false}), 
 async (req, res) => {
    try {
       const updatedUser = await Users.findOneAndUpdate(
          {Username: req.params.Username},
-         {$push: { FavoriteMovies: req.params.MovieID }},
+         {$push: { FavoriteMovies: req.params.Title }},
          {new: true},
       );
       res.json(updatedUser);
@@ -229,13 +229,13 @@ async (req, res) => {
    );
 
 //DELETE - Allow users to remove a movie from their list of favorites
-app.delete('/users/:Username/movies/:MovieID', 
+app.delete('/users/:Username/movies/:Title', 
 passport.authenticate('jwt', { session: false }), 
 async (req, res) => {
    try {
       const updatedUser = await Users.findOneAndUpdate(
          { Username: req.params.Username },
-         {$pull: {FavoriteMovies: req.params.MovieID}},
+         {$pull: {FavoriteMovies: req.params.Title}},
          {new: true},
       );
       res.json(updatedUser);
