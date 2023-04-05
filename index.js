@@ -229,14 +229,14 @@ async (req, res) => {
 //    );
 
 app.post(
-   "/users/:Username/movies/:MovieID",
+   "/users/:Username/movies/:Title",
    passport.authenticate("jwt", { session: false }),
    (req, res) => {
      const promise = Users.findOneAndUpdate(
        { Username: req.params.Username },
        {
          $push: {
-           FavoriteMovies: req.params.MovieID,
+           FavoriteMovies: req.params.Title,
          },
        },
        { new: true }
