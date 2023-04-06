@@ -16,42 +16,16 @@ const Users = Models.User;
 
 dotenv.config();
 
-// mongoose.connect('mongodb://localhost:27017/dbname', { useNewUrlParser: true, useUnifiedTopology: true });
-
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-
-//Connect to the myFlixDB database
-// mongoose.connect('mongodb://127.0.0.1:27017/myFlixDB');
-
-// mongoose.connect(process.env.CONNECTION_URI, {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true
-//    }
-// );
 
 //Dependencies
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("common"));
 app.use(express.static("public"));
-
-// let allowedOrigins = [
-//    'http://localhost:8080',
-//    'http://testsite.com'
-// ];
-// app.use(cors({
-//   origin: (origin, callback) => {
-//    if(!origin) return callback(null, true);
-//    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-//       let message = "The CORS policy for this application doesn't allow access from origin " + origin;
-//       return callback(new Error(message ), false);
-//    }
-//     return callback(null, true);
-//    }
-// }));
 
 app.use(cors()); //temp test
 
@@ -246,13 +220,13 @@ app.put(
 
 //CREATE - Allow users to add a movie to their list of favorites
 app.post(
-  "/users/:Username/movies/:Title",
+  "/users/:Username/movies/:MovieID",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
       const updatedUser = await Users.findOneAndUpdate(
         { Username: req.params.Username },
-        { $push: { FavoriteMovies: req.params.Title } },
+        { $push: { FavoriteMovies: req.params.MovieID } },
         { new: true }
       );
       res.json(updatedUser);
@@ -265,13 +239,13 @@ app.post(
 
 //DELETE - Allow users to remove a movie from their list of favorites
 app.delete(
-  "/users/:Username/movies/:Title",
+  "/users/:Username/movies/:MovieID",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
       const updatedUser = await Users.findOneAndUpdate(
         { Username: req.params.Username },
-        { $pull: { FavoriteMovies: req.params.Title } },
+        { $pull: { FavoriteMovies: req.params.MovieID } },
         { new: true }
       );
       res.json(updatedUser);
