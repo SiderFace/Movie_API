@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("common"));
 app.use(express.static("public"));
 
-app.use(cors()); //temp test
+app.use(cors());
 
 let auth = require("./auth")(app);
 const passport = require("passport");
@@ -105,7 +105,7 @@ app.get(
 // READ - All users
 app.get(
   "/users",
-  passport.authenticate("jwt", { session: false }),
+//   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.find()
       .then((users) => {
@@ -169,7 +169,7 @@ app.post(
 // READ - User by username
 app.get(
   "/users/:Username",
-  passport.authenticate("jwt", { session: false }),
+//   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOne({ Username: req.params.Username })
       .then((user) => {
@@ -259,7 +259,7 @@ app.delete(
 //DELETE - Allow existing users to deregister
 app.delete(
   "/users/:Username",
-  passport.authenticate("jwt", { session: false }),
+//   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
       .then((user) => {
