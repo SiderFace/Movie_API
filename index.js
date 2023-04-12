@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
 //READ - Return a list of ALL movies
 app.get(
   "/movies",
-//   passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.find()
       .then((movies) => {
@@ -57,7 +57,7 @@ app.get(
 //READ - Returns data about a single movie by title
 app.get(
   "/movies/:Title",
-//   passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({ Title: req.params.Title })
       .then((movie) => {
@@ -73,7 +73,7 @@ app.get(
 //READ - Return data about a genre by name
 app.get(
   "/movies/genre/:genreName",
-//   passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({ "Genre.Name": req.params.genreName })
       .then((movie) => {
@@ -89,7 +89,7 @@ app.get(
 //READ - Return data about a director by name
 app.get(
   "/movies/directors/:directorName",
-//   passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({ "Director.Name": req.params.directorName })
       .then((movie) => {
@@ -105,7 +105,7 @@ app.get(
 // READ - All users
 app.get(
   "/users",
-//   passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.find()
       .then((users) => {
@@ -169,7 +169,7 @@ app.post(
 // READ - User by username
 app.get(
   "/users/:Username",
-//   passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOne({ Username: req.params.Username })
       .then((user) => {
@@ -221,7 +221,7 @@ app.put(
 //CREATE - Allow users to add a movie to their list of favorites
 app.post(
   "/users/:Username/movies/:MovieID",
-//   passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
       const updatedUser = await Users.findOneAndUpdate(
@@ -240,7 +240,7 @@ app.post(
 //DELETE - Allow users to remove a movie from their list of favorites
 app.delete(
   "/users/:Username/movies/:MovieID",
-//   passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
       const updatedUser = await Users.findOneAndUpdate(
@@ -259,7 +259,7 @@ app.delete(
 //DELETE - Allow existing users to deregister
 app.delete(
   "/users/:Username",
-//   passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
       .then((user) => {
